@@ -1,9 +1,3 @@
-const db = {};
-console.log('hello');
-
-// ['manna', 'sakib', 'manna', 'kancon', 'rubel', 'manna', 'sakib'];
-// { manna: 1, sani: 1, sakib: 3, kancon: 4 }
-
 const addToDb = item => {
     const db = getDb();
     if (item in db) {
@@ -11,12 +5,21 @@ const addToDb = item => {
     } else {
         db[item] = 1;
     }
-    console.log(db);
+    saveToDb(db)
 }
 const removeInDb = item => {
     const db = getDb();
     delete db[item];
+    saveToDb(db)
 }
+const saveToDb = db => {
+    const dbJson = JSON.stringify(db);
+    localStorage.setItem('shopping-cart', dbJson)
+}
+
 const getDb = () => {
-    return db;
+    let savedDb = localStorage.getItem('shopping-cart');
+    savedDb = JSON.parse(savedDb);
+    console.log(typeof savedDb, savedDb);
+    return savedDb;
 }
